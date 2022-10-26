@@ -1,68 +1,62 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- bootstraps and jquery cdn -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-   <!-- axios cdn -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
-    
-    <title>User Registration</title>
+	<title>Slide Navbar</title>
+	<link rel="stylesheet" type="text/css" href="./style.css">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
 </head>
 <body>
-    
-    <form class="form-horizontal" method="post">
-        <legend style="text-align: center;">SignUp Form</legend>
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="name">Name</label>  
-          <div class="col-md-5">
-          <input id="name" name="name" type="text" placeholder="NAME" class="form-control " >
-          </div>
-        </div>
-        <!-- Text input-->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="email">Email</label>  
-          <div class="col-md-5">
-          <input id="email" name="email" type="text" placeholder="EMAIL" class="form-control " >
-          </div>
-        </div>
-        
-        <!-- Text input-->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="phone">Phone Number</label>  
-          <div class="col-md-5">
-          <input id="phone" name="phone" type="text" placeholder="PHONE" class="form-control " >
-            
-          </div>
-        </div>
-        
-        <!-- Password input-->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="password">Password</label>
-          <div class="col-md-5">
-            <input id="password" name="password" type="password" placeholder="PASSWORD" class="form-control " >
-            
-          </div>
-        </div>
-        
-        <!-- Button -->
-        
-        
+	<div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
 
-    </form>
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="sign-up"></label>
-      <div class="col-md-4">
-        <button id="sign-up" name="sign-up" class="btn btn-primary">Sign Up</button>
-        Have an account?
-        <a href="./logIn.html" class="ml-2">Login</a>
-      </div>
-      
-    
-    </div>
+			<div class="signup">
+				<form id  = 'sign-up'>
+					<label for="chk" aria-hidden="true">Sign up</label>
+					<input type="text" name="txt" id = 'name' placeholder="Name" required="">
+					<input type="email" name="email" id = 'email' placeholder="Email" required="">
+					<input type="password" name="pswd" id = 'phone' placeholder="Phone" required="">
+                    <input type="password" name="pswd" id = 'password' placeholder="Password" required="">
+					<button >Sign up</button>
+				</form>
+			</div>
 
+		   
+	</div>
+    <script >
+
+
+const submit=document.getElementById('sign-up')
+    submit.addEventListener('click',(e)=>{
+      e.preventDefault()
+  
+      const name=document.getElementById('name').value
+      const email=document.getElementById('email').value
+      const phone=document.getElementById('phone').value
+      const password=document.getElementById('password').value
+      const signUpDetails={
+        name:name,
+        email:email,
+        phone:phone,
+        password:password
+
+      }
+      axios.post('http://localhost:4000/register',signUpDetails)
+        .then(response=>{
+          console.log("logged In",response);
+          if(response.data.isSucces===false){
+            alert(`${response.data.email} ${response.data.message}, Please Login`)
+          }
+          if(response.data.isSucces){
+            alert(`${response.data.user.email} ${response.data.message}`);
+            // window.location.href='./login.html'
+          }
+        })
+        .catch(err=>{
+          console.log(err);
+        })
+
+    })
+    </script>
 </body>
 </html>
