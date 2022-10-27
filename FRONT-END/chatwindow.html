@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- axios cdn -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+    <link rel="stylesheet" href="./chat.css">
+    <title>Chat Window</title>
+</head>
+<body>
+    <h2 id="app">Chat Window</h2>
+
+    <div id="chats" style="align-items: center; width: 65%; height: 45%; background-color: rgb(166, 201, 231); list-style: none;">
+    </div>
+    <div id="msg" style="list-style:none;">
+
+    </div>
+
+<footer style="margin-top: 15%; ">
+    <form onsubmit="sendMsg(event)">
+        <label for="msg"></label>
+        <input type="text" name="msg">
+        <button type="submit" >Send</button>
+    </form>
+</footer>
+
+
+<button type="submit" id="createGroup">Create a group</button>
+<form id="chatGroup" style="display: none;" onsubmit="createGroup(event)">
+  <label for="group"></label>
+  <input type="text" name="group" placeholder="group name">
+  <button type="submit" >Create Group</button>
+</form>
+<section id="groupWindow" class="container">
+  <h2>Group Window</h2>
+  <div class='group-details'>
+      <ul id="group-list" style="list-style: none;">
+        <!-- added the list of all groups when clock on button-->
+      </ul>
+  </div>
+</section>
+<button type="submit" id="getgroup">Show All Groups</button>
+<hr>
+
+
+<!-- <script src="./js/groupWindow.js"></script> -->
+</body>
+</html>
