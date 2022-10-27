@@ -11,13 +11,13 @@
 		<input type="checkbox" id="chk" aria-hidden="true">
 
 			<div class="signup">
-				<form id  = 'sign-up'>
+				<form >
 					<label for="chk" aria-hidden="true">Sign up</label>
 					<input type="text" name="txt" id = 'name' placeholder="Name" required="">
 					<input type="email" name="email" id = 'email' placeholder="Email" required="">
-					<input type="password" name="pswd" id = 'phone' placeholder="Phone" required="">
+					<input type="password"  id = 'phone' placeholder="Phone" required="">
                     <input type="password" name="pswd" id = 'password' placeholder="Password" required="">
-					<button >Sign up</button>
+					<button  id  = 'sign-up'>Sign up</button>
 				</form>
 			</div>
 
@@ -49,7 +49,7 @@ const submit=document.getElementById('sign-up')
           }
           if(response.data.isSucces){
             alert(`${response.data.user.email} ${response.data.message}`);
-            // window.location.href='./login.html'
+            window.location.href='./login.html'
           }
         })
         .catch(err=>{
