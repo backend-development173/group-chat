@@ -10,4 +10,5 @@ router.post('/login',userController.postlogin);
 router.get('/users',Authentication.auth,userController.getusers);
 
 router.post('/message',Authentication.auth, userController.postMessage)
+router.get('/getAllmessage',Authentication.auth,userController.getAllmessage);
 module.exports  = router;

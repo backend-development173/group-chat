@@ -90,23 +90,21 @@ return res.status(200).json({users, success :true});
 //postMessage
 
 exports.postMessage = async (req,res)=>{
-    console.log(req.user + "line92")
-    const msg=req.body.msg;
-    console.log(msg);
-    const {name}=req.user
-    try{
-        const message=await req.user.createMessage({
-                                message:msg,
-                            });
-        console.log("message post",message);
-         res.status(201).json({
-            data:message,
-            message:'message send',
-            name:name
+        req.user.createMessage({
+            messageText:req.body.chatMessage,
+            name:req.user.name
+        }).then(result=>{
+            res.status(200).json({message:"Message added to DB",user:req.user})
+        }).catch(err=>{
+            console.log(err)
+            res.status(404).json({message:"something went wrong"})
         })
-    }catch(err){
-         res.status(400).json({message:`msg not sent`})
     }
-    
-   
+//getmessage
+exports.getAllmessage=(req,res,next)=>{
+    Message.findAll( {attributes: ['messageText', 'name']}).then(result=>{
+        res.status(200).json({message:"Fetched successfully",result})
+    }).catch(err=>{
+        res.status(400).json({message:"Something went wrong"})
+    })
 }

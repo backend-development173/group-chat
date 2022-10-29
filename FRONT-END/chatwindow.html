@@ -19,10 +19,10 @@
     </div>
 
 <footer style="margin-top: 15%; ">
-    <form onsubmit="sendMsg(event)">
+    <form >
         <label for="msg"></label>
-        <input type="text" name="msg">
-        <button type="submit" >Send</button>
+        <input id='chatMessageInput' type="text" name="msg">
+        <button id="btn"  type="submit" >Send</button>
     </form>
 </footer>
 
@@ -75,22 +75,45 @@
       </li>
       `
     }
-      async function sendMsg(event){
-      event.preventDefault();
-      const msg = event.target.msg.value
-      // console.log("mssg",msg);
-      const  token  = localStorage.getItem('token');
-      const obj = {msg}
-      const response = await axios.post('http://localhost:4000/message',obj,{headers:{'Authorization':token}})
-
-        showMessage(response.data.name,msg)
-        event.target.msg.value='';
+    //send message
+    document.getElementById('btn').addEventListener('click',(e)=>{
+        e.preventDefault();
+    let token=localStorage.getItem('token')
+    let chatMessage = document.getElementById("chatMessageInput").value;
+    let reqObj={
+        chatMessage
     }
+    axios.post("http://localhost:4000/message",reqObj,{headers:{ 'Authorization':token} }).then(result=>{
+        let userName=result.data.user.name;
+        alert(result.data.message)
+        showMessage(userName,chatMessage)
+        console.log(result)
+    }).catch(err=>{
+        console.log(err)
+    });
+})
     const parentNode1 = document.getElementById('msg');
     function showMessage(name,msg){
       parentNode1.innerHTML += `<li>${name}:${msg}</li>`
       
     }
+    function showMessageinUI(message,userName){
+    chatMessage.innerHTML+=`<p>${userName}: ${message}`
+}
+     //get all messages without group
+     window.addEventListener("DOMContentLoaded",()=>{
+        const token = localStorage.getItem('token');
+    axios.get("http://localhost:4000/getAllmessage",{headers:{'Authorization':token}}).then(response=>{
+        let message=response.data.result;
+
+        message.forEach(element => {
+            showMessage(element.name,element.messageText)
+        });
+    }).catch(err=>{
+        console.log(err)
+    });
+});
+
     
 
 </script>
