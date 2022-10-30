@@ -85,7 +85,7 @@
     }
     axios.post("http://localhost:4000/message",reqObj,{headers:{ 'Authorization':token} }).then(result=>{
         let userName=result.data.user.name;
-        alert(result.data.message)
+        // alert(result.data.message)
         showMessage(userName,chatMessage)
         console.log(result)
     }).catch(err=>{
@@ -101,18 +101,20 @@
     chatMessage.innerHTML+=`<p>${userName}: ${message}`
 }
      //get all messages without group
-     window.addEventListener("DOMContentLoaded",()=>{
         const token = localStorage.getItem('token');
-    axios.get("http://localhost:4000/getAllmessage",{headers:{'Authorization':token}}).then(response=>{
+        setInterval(()=>{
+            axios.get("http://localhost:4000/getAllmessage",{headers:{'Authorization':token}}).then(response=>{
         let message=response.data.result;
-
+        parentNode1.innerHTML= ' ';
         message.forEach(element => {
             showMessage(element.name,element.messageText)
         });
     }).catch(err=>{
         console.log(err)
     });
-});
+        },1000)
+ 
+
 
     
 
