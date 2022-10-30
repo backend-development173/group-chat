@@ -97,23 +97,48 @@
       parentNode1.innerHTML += `<li>${name}:${msg}</li>`
       
     }
-    function showMessageinUI(message,userName){
-    chatMessage.innerHTML+=`<p>${userName}: ${message}`
-}
+
      //get all messages without group
-        const token = localStorage.getItem('token');
+       
         setInterval(()=>{
-            axios.get("http://localhost:4000/getAllmessage",{headers:{'Authorization':token}}).then(response=>{
-        let message=response.data.result;
-        parentNode1.innerHTML= ' ';
-        message.forEach(element => {
-            showMessage(element.name,element.messageText)
-        });
-    }).catch(err=>{
-        console.log(err)
-    });
-        },1000)
- 
+            const token = localStorage.getItem('token');
+    let messagesObj = JSON.parse(localStorage.getItem("messagesObj"));
+    let lastMessageId;
+    if(messagesObj){ 
+      let lastObj=messagesObj[(messagesObj.length-1)]
+      lastMessageId=lastObj.id;
+    }else{
+      lastMessageId=0;
+    }
+    axios
+      .get(
+        `http://localhost:4000/getAllMessage?lastMessageId=${lastMessageId}`,{headers:{'Authorization':token}}
+      )
+      .then((response) => {
+        let message = response.data.result;       
+        if(!localStorage.getItem('messagesObj')){
+          localStorage.setItem("messagesObj",JSON.stringify(message));
+        }else{
+          if(message.length>0){
+           messagesObj.push(message[0]);     
+           localStorage.setItem("messagesObj", JSON.stringify(messagesObj));
+          }
+        }
+        parentNode1.innerHTML  = " ";
+        if(Array.isArray(messagesObj)){
+         messagesObj.forEach((element) => {
+           if (element.messageText == "JOINED") {
+             showUsers(element.name);
+           } else showMessage( element.name,element.messageText);
+         });
+       }
+
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+},2000);
 
 
     
