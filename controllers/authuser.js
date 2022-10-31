@@ -2,6 +2,7 @@ const User=require('../model/User');
 const bcrypt = require('bcrypt');
 const Message   = require('../model/chatmessage')
 const { Op } = require("sequelize");
+const Group=require('../model/group')
 
 var jwt = require('jsonwebtoken');
 exports.postRegister=(req,res,next)=>{
@@ -90,29 +91,57 @@ return res.status(200).json({users, success :true});
 
 //postMessage
 
-exports.postMessage = async (req,res)=>{
-        req.user.createMessage({
-            messageText:req.body.chatMessage,
-            name:req.user.name
-        }).then(result=>{
-            res.status(200).json({message:"Message added to DB",user:req.user})
-        }).catch(err=>{
-            console.log(err)
-            res.status(404).json({message:"something went wrong"})
-        })
-    }
+exports.postMessage=(req,res,next)=>{
+    Group.findOne({
+        where:{
+            name:req.body.groupName
+
+    }}).then((response)=>{
+        console.log(req.user + 'line 1000')
+       return req.user.createMessage({
+         messageText: req.body.chatMessage,
+         name: req.user.name,
+         GroupId:response.id
+       });
+    })
+   .then(result=>{
+        res.status(200).json({message:"Message added to DB",user:req.user})
+    }).catch(err=>{
+        console.log(err)
+        res.status(404).json({message:"something went wrong"})
+    })
+}
 //getmessage
 exports.getAllmessage=(req,res,next)=>{
     let lastMessageId = req.query.lastMessageId;
-    Message.findAll({
+    let groupName=req.query.groupName;
+    Group.findOne({
         where:{
+            name:groupName
+        }
+    }).then(data=>{
+      console.log('lastMessageId',lastMessageId);
+      
+       return Message.findAll({
+          where: {
             id: {
-                [Op.gt]:lastMessageId
-            }
-         }
-         }).then(result=>{
+              [Op.gt]: lastMessageId,
+            },
+            GroupId:data.id
+          }
+        });
+    })
+   .then(result=>{
         res.status(200).json({message:"Fetched successfully",result})
     }).catch(err=>{
         res.status(400).json({message:"Something went wrong"})
     })
 }
+
+exports.getAllUser=(req,res,next)=>{
+    User.findAll().then(result=>{
+        res.status(200).json(result)
+    }).catch(err=>{
+        res.status(400).json({message:"Something went wrong"})
+    })
+ }

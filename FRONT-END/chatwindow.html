@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- axios cdn -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+   
+  
+  
     <link rel="stylesheet" href="./chat.css">
     <title>Chat Window</title>
 </head>
@@ -18,32 +16,93 @@
 
     </div>
 
-<footer style="margin-top: 15%; ">
-    <form >
-        <label for="msg"></label>
-        <input id='chatMessageInput' type="text" name="msg">
-        <button id="btn"  type="submit" >Send</button>
+    <div id="chatFooter">
+        <input type="text" placeholder="Enter Message" size="50" id="chatMessageInput">
+        <button class="btn">Send</button>
+    </div>
+
+<div class="left">
+    <h1>Group Chat</h1>
+  
+    <button id ="addGroup">Add Group</button>
+    <form id="addGroupForm" class="hidden">
+        <label for="Group Name">Group Name
+        </label>
+        <br>
+        <input type="text" id="inputGroupName" size="50">
+        <br>
+        <button id="addGroupSubmitButton">Submit</button>
+        
     </form>
-</footer>
+    <div id="availableGroup">
+        <h1>Available Group</h1>
+       <!-- <div>Group1 <button id="addUser" onclick='addUserGroup(event)'>Add User</button> <button>Open Chat</button></div> -->
+    </div>
+    <div>
+         <div class="hidden" id="addUserForm">
+        <h1>Add User</h1>
+        <form class="add-formStyle">
+            <label for="name">Enter Email
+            </label>
+            <br>
+            <input type="text" id="inputEmail" size="50">
+            <br>
+            <button id="addUserSubmitButton">Submit</button>
+        </form>
+    </div>
+    <div class="hidden" id="addAdminForm">
+        <h1>Add Admin</h1>
+        <form class="add-formStyle">
+            <label for="Email">Enter Email
+            </label>
+            <br>
+            <input type="text" id="inputEmail-admin" size="50">
+            <br>
+            <button id="addAdminSubmitButton">Submit</button>
+        </form>
+    </div>
+    <div class="hidden" id="addDeleteUserForm">
+        <h1>Delete User</h1>
+        <form class="add-formStyle">
+            <label for="Email">Enter Email
+            </label>
+            <br>
+            <input type="text" id="inputDeleteUser" size="50">
+            <br>
+            <button id="deleteUserSubmitButton">Submit</button>
+        </form>
+    </div>
+    <div id="buttons-admin" class="hidden">
+        <button onclick="showUser(event)">Show User</button>
+        <button onclick='addUserGroup(event)'>Add User</button>
+        <button onclick='addAdminGroup(event)'>Add Admin</button>
+        <button onclick="deleteUSer(event)">Delete User</button>
+    </div>
+    <div id="buttons-user" class="hidden">
+        <button onclick="showUser(event)">Show User</button>
+    </div>
+    <div id="user-list" class="hidden">
+        <!-- <div class="user-row">User1</div>
+        <div class="user-row">User1</div> -->
 
+    </div>
+    
+    
+</div>
+    </div>
+<div class="right">
+    <div id="chatHeader">
+        <!-- <h1>Group Chat</h1>
+        <button>Add Admin</button>
+        <button>Remove Admin</button>
+        <button>Show User</button>
+        <button>Add User</button>   -->
+    </div>
+    <div id="chatMessage">
+          
+    </div>
 
-<button type="submit" id="createGroup">Create a group</button>
-<form id="chatGroup" style="display: none;" onsubmit="createGroup(event)">
-  <label for="group"></label>
-  <input type="text" name="group" placeholder="group name">
-  <button type="submit" >Create Group</button>
-</form>
-<section id="groupWindow" class="container">
-  <h2>Group Window</h2>
-  <div class='group-details'>
-      <ul id="group-list" style="list-style: none;">
-        <!-- added the list of all groups when clock on button-->
-      </ul>
-  </div>
-</section>
-<button type="submit" id="getgroup">Show All Groups</button>
-<hr>
-
+<!-- 
 
 <script>
     
@@ -100,7 +159,7 @@
 
      //get all messages without group
        
-        setInterval(()=>{
+        setIhnterval(()=>{
             const token = localStorage.getItem('token');
     let messagesObj = JSON.parse(localStorage.getItem("messagesObj"));
     let lastMessageId;
@@ -143,7 +202,10 @@
 
     
 
-</script>
+</script> -->
 <!-- <script src="./js/groupWindow.js"></script> -->
+<script src = './chat.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+
 </body>
 </html>

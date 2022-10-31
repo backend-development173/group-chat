@@ -193,3 +193,82 @@
 /* .fa-shopping-cart{
     color:white;
 } */
+
+.centered{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+   
+}
+#chatHeader{
+    text-align: center;
+}
+#chatFooter{
+    background-color: rgb(7, 61, 61);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 40%;
+    right: 0;
+    width: 70%;
+} 
+p:nth-child(odd){
+    background-color: orange;
+}
+p:nth-child(even){
+    background-color: lightgreen;
+}
+.right{
+    width: 70%;
+    float: right;
+}
+.left{
+    width: 30%;
+    float: left;
+    background-color: aliceblue;
+    height: 100vh;
+   
+}
+.left h1{
+    text-align: center;
+}
+#addGroup{
+    background-color: lightgreen;
+    padding: 5px;
+    border-radius: 5px;
+    color: black;
+}
+#addGroupForm{
+    background-color: skyblue;
+    text-align: center;
+    margin-top: 30px;
+}
+.add-formStyle{
+    background-color: skyblue;
+    text-align: center;
+    margin-top: 30px;
+}
+.hidden{
+    display: none;
+}
+#availableGroup div{
+    background-color: violet;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+#buttons-admin{
+    margin: 20px 0 20px 0;
+}
+#buttons-user {
+    margin: 20px 0 20px 0;
+}
+.user-row{
+    background-color: lightgreen;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

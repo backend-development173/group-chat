@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const sequelize = require('../util/database')
 
-const Message = sequelize.define('message',{
+const message = sequelize.define('message',{
     messageText:{
         type:Sequelize.TEXT,
         allowNull:false
@@ -13,4 +13,4 @@ const Message = sequelize.define('message',{
     }
 })
 
-module.exports = Message;
+module.exports = message;
